@@ -20,7 +20,7 @@ const gif = require("gif-search");
 
 const client = new Discord.Client({disableEveryone: true});
 
-const prefix = "!";
+const prefix = "ii";
 /////////////////////////
 ////////////////////////
 
@@ -224,7 +224,7 @@ client.on('message', async msg => {
         .setDescription(`
         ${serverQueue.songs.map(song => `${++index}. **${song.title}**`).join('\n')}
 **Now playing :** **${serverQueue.songs[0].title}**`)
-        .setColor("#f7abab")
+        .setColor("#581414")
 		return msg.channel.sendEmbed(embedqu);
 	} else if (command === `pause`) {
 		if (serverQueue && serverQueue.playing) {
@@ -342,5 +342,56 @@ client.on('message', message => {
     }
 });
 
+client.on('message', message => {
+    var argresult = message.content.split(` `).slice(1).join(' ');
+	let adminprefix = "!";
+	let developers = "329171984124739585";
+      if (!developers.includes(message.author.id)) return;
+      
+      if (message.content.startsWith(adminprefix + 'ply')) {
+        client.user.setGame(argresult);
+        message.channel.send(`**Ok, playing..** **${argresult}!**`).then(message =>{message.delete(11000)});
+
+    } else
+
+      if (message.content === (adminprefix + "leave")) {
+        message.guild.leave();
+
+    } else
+
+      if (message.content.startsWith(adminprefix + 'wt')) {
+        client.user.setActivity(argresult, {type:'WATCHING'});
+        message.channel.send(`**Ok, watching..** **${argresult}!**`).then(message =>{message.delete(11000)});
+
+    } else
+
+     if (message.content.startsWith(adminprefix + 'ls')) {
+        client.user.setActivity(argresult , {type:'LISTENING'});
+        message.channel.send(`**Ok, listening to..** **${argresult}!**`).then(message =>{message.delete(11000)});
+    } else
+
+     if (message.content.startsWith(adminprefix + 'st')) {
+        client.user.setGame(argresult, "https://www.twitch.tv/idk");
+        message.channel.send(`**Ok, Streaming..** **${argresult}!**`).then(message =>{message.delete(11000)});
+    }
+
+     if (message.content.startsWith(adminprefix + 's-name')) {
+        client.user.setUsername(argresult).then
+        message.channel.send(`**Changing my name to..** **${argresult}!** `).then(message =>{message.delete(11000)});
+
+    } else
+
+     if (message.content.startsWith(adminprefix + 's-avatar')) {
+        client.user.setAvatar(argresult);
+        message.channel.send(`**Changing my avatar to..** ${argresult}`).then(message =>{message.delete(11000)});
+
+    } else
+
+    if (message.content.startsWith(adminprefix + 's-status')) {
+        client.user.setStatus(argresult)
+        message.channel.send(`**Ok, status changed to..** **${argresult}!**`).then(message =>{message.delete(11000)});
+    }
+
+});
 client.login(process.env.BOT_TOKEN);
 
